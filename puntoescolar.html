@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PUNTO ESCOLAR | Innovación en Papelería</title>
+    
+    <!-- FAVICON (Logo de la pestaña) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✏️</text></svg>">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- FontAwesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* =========================================
+           VARIABLES Y CONFIGURACIÓN BASE
+           ========================================= */
+        :root {
+            --primary-blue: #1A365D;
+            --secondary-blue: #2B6CB0;
+            --accent-yellow: #F6AD55;
+            --bg-light: #F8FAFC;
+            --text-dark: #2D3748;
+            --text-light: #FFFFFF;
+            --card-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            --glow-shadow: 0 15px 35px rgba(246, 173, 85, 0.4);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* =========================================
+           ANIMACIONES GLOBALES
+           ========================================= */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* =========================================
+           NAVEGACIÓN (HEADER)
+           ========================================= */
+        header {
+            background-color: rgba(26, 54, 93, 0.85);
+            backdrop-filter: blur(15px);
+            color: var(--text-light);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: var(--transition);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: 1px;
+        }
+
+        .logo i {
+            color: var(--accent-yellow);
+            font-size: 1.8rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-5px) rotate(5deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a {
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--accent-yellow);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-yellow);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* =========================================
+           HERO SECTION (PORTADA)
+           ========================================= */
+        .hero {
+            background: linear-gradient(135deg, rgba(26, 54, 93, 0.9) 0%, rgba(43, 108, 176, 0.8) 100%), url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--text-light);
+            padding: 0 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Formas flotantes en el Hero */
+        .floating-shape {
+            position: absolute;
+            background: rgba(246, 173, 85, 0.15);
+            border-radius: 50%;
+            animation: floatShape 6s infinite ease-in-out;
+        }
+        .shape1 { width: 150px; height: 150px; top: 10%; left: 10%; animation-delay: 0s; }
+        .shape2 { width: 80px; height: 80px; bottom: 20%; right: 15%; animation-delay: 2s; background: rgba(255, 255, 255, 0.05); }
+        .shape3 { width: 200px; height: 200px; bottom: -10%; left: 30%; animation-delay: 4s; background: rgba(43, 108, 176, 0.3); }
+
+        @keyframes floatShape {
+            0% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-20px) scale(1.05); }
+            100% { transform: translateY(0) scale(1); }
+        }
+
+        .hero-content {
+            max-width: 900px;
+            position: relative;
+            z-index: 2;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            text-shadow: 2px 4px 10px rgba(0,0,0,0.5);
+        }
+
+        .hero h1 span {
+            color: var(--accent-yellow);
+            text-shadow: 0 0 20px rgba(246, 173, 85, 0.6);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            font-weight: 300;
+            text-shadow: 1px 2px 5px rgba(0,0,0,0.5);
+        }
+
+        .btn {
+            background-color: var(--accent-yellow);
+            color: var(--primary-blue);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            display: inline-block;
+            transition: var(--transition);
+            border: 2px solid var(--accent-yellow);
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(246, 173, 85, 0.4);
+        }
+
+        .btn:hover {
+            background-color: transparent;
+            color: var(--accent-yellow);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(246, 173, 85, 0.6);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--text-light);
+            border: 2px solid var(--text-light);
+            margin-left: 1rem;
+            box-shadow: none;
+        }
+
+        .btn-outline:hover {
+            background-color: var(--text-light);
+            color: var(--primary-blue);
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.4);
+        }
+
+        /* ONDA SEPARADORA */
+        .wave-bottom {
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+        }
+
+        .wave-bottom svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 80px;
+        }
+
+        .wave-bottom .shape-fill {
+            fill: var(--bg-light);
+        }
+
+        /* =========================================
+           SECCIONES GENERALES Y PATRONES
+           ========================================= */
+        section {
+            padding: 6rem 2rem;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: #718096;
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+
+        /* Patrón de puntos para fondo claro */
+        .bg-pattern {
+            background-color: #F8FAFC;
+            background-image: radial-gradient(#CBD5E0 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        /* =========================================
+           QUIÉNES SOMOS
+           ========================================= */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+            color: #4A5568;
+        }
+
+        .mv-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .mv-card {
+            background: var(--text-light);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+            border-left: 6px solid var(--accent-yellow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .mv-card::after {
+            content: '\f0c0'; /* Icono de FontAwesome */
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            right: -10px;
+            bottom: -20px;
+            font-size: 6rem;
+            color: rgba(26, 54, 93, 0.03);
+            transition: var(--transition);
+        }
+
+        .mv-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .mv-card:hover::after {
+            transform: scale(1.2) rotate(-10deg);
+        }
+
+        .mv-card h3 {
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .mv-card h3 i {
+            color: var(--accent-yellow);
+        }
+
+        /* =========================================
+           CATÁLOGO DE PRODUCTOS
+           ========================================= */
+        .bg-gray {
+            background-color: #EDF2F7;
+            background-image: linear-gradient(0deg, transparent 24%, rgba(255, 255, 255, .5) 25%, rgba(255, 255, 255, .5) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .5) 75%, rgba(255, 255, 255, .5) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(255, 255, 255, .5) 25%, rgba(255, 255, 255, .5) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .5) 75%, rgba(255, 255, 255, .5) 76%, transparent 77%, transparent);
+            background-size: 50px 50px;
+        }
+
+        .catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .product-card {
+            background: var(--text-light);
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 0;
+            background: linear-gradient(180deg, var(--primary-blue) 0%, #0F233E 100%);
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .product-card:hover::before {
+            height: 100%;
+        }
+
+        .product-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(26, 54, 93, 0.2);
+        }
+
+        .product-card:hover h3, .product-card:hover p {
+            color: var(--text-light);
+        }
+        
+        .product-card:hover .icon-box {
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .product-card:hover .icon-box i {
+            color: var(--accent-yellow);
+            transform: scale(1.1);
+        }
+
+        .icon-box {
+            width: 90px;
+            height: 90px;
+            background: #EBF8FF;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            transition: var(--transition);
+        }
+
+        .icon-box i {
+            font-size: 2.5rem;
+            color: var(--primary-blue);
+            transition: var(--transition);
+        }
+
+        .product-card h3 {
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            transition: var(--transition);
+        }
+
+        .product-card p {
+            color: #718096;
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+
+        /* =========================================
+           PORTAFOLIO DE TRABAJOS
+           ========================================= */
+        .portfolio-section {
+            margin-top: 5rem;
+            padding-top: 4rem;
+            border-top: 2px dashed #CBD5E0;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .portfolio-item {
+            background: var(--text-light);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            position: relative;
+            cursor: pointer;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--glow-shadow);
+        }
+
+        .portfolio-img {
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .portfolio-img::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.5));
+            opacity: 0;
+            transition: var(--transition);
+        }
+        
+        .portfolio-item:hover .portfolio-img::after {
+            opacity: 1;
+        }
+
+        .portfolio-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .portfolio-item:hover .portfolio-img img {
+            transform: scale(1.15);
+        }
+
+        .portfolio-info {
+            padding: 1.5rem;
+            text-align: center;
+            background: var(--text-light);
+            position: relative;
+            z-index: 2;
+        }
+
+        .portfolio-info h4 {
+            color: var(--primary-blue);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .portfolio-info p {
+            color: #718096;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        /* =========================================
+           PROYECTO DE TRANSFORMACIÓN DIGITAL
+           ========================================= */
+        .digital-section {
+            background: linear-gradient(135deg, #1A365D 0%, #0F233E 100%);
+            color: var(--text-light);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Cuadrícula tecnológica de fondo */
+        .digital-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
+            z-index: 1;
+        }
+
+        .digital-section .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .digital-section .section-header h2 {
+            color: var(--text-light);
+        }
+
+        .digital-section .section-header p {
+            color: #A0AEC0;
+        }
+
+        .digital-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-top: 3rem;
+        }
+
+        .tech-tools {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .tech-item {
+            background: rgba(255,255,255,0.05);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+        }
+
+        .tech-item:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateX(10px);
+            border-color: var(--accent-yellow);
+            box-shadow: 0 0 20px rgba(246, 173, 85, 0.2);
+        }
+
+        .tech-item i {
+            font-size: 2rem;
+            color: var(--accent-yellow);
+        }
+
+        .tech-item h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .tech-item p {
+            font-size: 0.9rem;
+            color: #CBD5E0;
+        }
+
+        /* Tabla Comparativa Antes/Después */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 1.2rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .comparison-table th {
+            background: rgba(0,0,0,0.3);
+            font-family: 'Montserrat', sans-serif;
+            color: var(--accent-yellow);
+        }
+
+        .comparison-table tr:hover {
+            background: rgba(255,255,255,0.08);
+        }
+
+        /* =========================================
+           EQUIPO Y DATOS ACADÉMICOS
+           ========================================= */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .team-card {
+            background: var(--text-light);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: var(--card-shadow);
+            border-bottom: 4px solid var(--primary-blue);
+            transition: var(--transition);
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px);
+            border-bottom-color: var(--accent-yellow);
+        }
+
+        .team-card i {
+            font-size: 3rem;
+            color: #CBD5E0;
+            margin-bottom: 1rem;
+            transition: var(--transition);
+        }
+        
+        .team-card:hover i {
+            color: var(--primary-blue);
+        }
+
+        .team-card h4 {
+            color: var(--primary-blue);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .team-card p {
+            font-size: 0.85rem;
+            color: #718096;
+        }
+
+        /* =========================================
+           FOOTER (PIE DE PÁGINA)
+           ========================================= */
+        footer {
+            background-color: #0F172A;
+            color: var(--text-light);
+            padding: 5rem 2rem 2rem;
+            position: relative;
+        }
+        
+        .footer-wave {
+            position: absolute;
+            top: 0; left: 0; width: 100%; overflow: hidden; line-height: 0;
+        }
+        .footer-wave svg {
+            position: relative; display: block; width: calc(100% + 1.3px); height: 50px;
+            transform: rotate(180deg);
+        }
+        .footer-wave .shape-fill { fill: var(--bg-light); }
+
+        .footer-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-col h3 {
+            color: var(--accent-yellow);
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-col p {
+            color: #A0AEC0;
+            margin-bottom: 0.8rem;
+            font-size: 0.9rem;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-col ul li a {
+            color: #A0AEC0;
+            transition: var(--transition);
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--accent-yellow);
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #2D3748;
+            color: #718096;
+            font-size: 0.85rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* =========================================
+           DISEÑO RESPONSIVO
+           ========================================= */
+        @media (max-width: 992px) {
+            .about-grid, .digital-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero h1 { font-size: 2.8rem; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(26, 54, 93, 0.98);
+                flex-direction: column;
+                padding: 2rem;
+                text-align: center;
+                backdrop-filter: blur(10px);
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .menu-toggle {
+                display: block;
+            }
+            .hero h1 { font-size: 2.2rem; }
+            .hero p { font-size: 1rem; }
+            .btn-outline { margin-left: 0; margin-top: 1rem; }
+            .section-header h2 { font-size: 2rem; }
+            .comparison-table th, .comparison-table td {
+                padding: 0.8rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ================= HEADER ================= -->
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fa-solid fa-pencil"></i> PUNTO ESCOLAR
+            </div>
+            <div class="menu-toggle" id="mobile-menu">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+            <nav class="nav-links" id="nav-links">
+                <a href="#inicio">Inicio</a>
+                <a href="#nosotros">Nosotros</a>
+                <a href="#catalogo">Catálogo</a>
+                <a href="#proyecto">Proyecto Digital</a>
+                <a href="#equipo">Equipo</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ================= HERO SECTION ================= -->
+    <section id="inicio" class="hero">
+        <!-- Formas decorativas flotantes -->
+        <div class="floating-shape shape1"></div>
+        <div class="floating-shape shape2"></div>
+        <div class="floating-shape shape3"></div>
+
+        <div class="hero-content">
+            <h1>Materiales de calidad para tu <span>desarrollo académico</span></h1>
+            <p>Ofrecemos útiles escolares, papelería y materiales de oficina con una atención responsable y un servicio eficiente para estudiantes, docentes y familias en El Salvador.</p>
+            <a href="#catalogo" class="btn">Explorar Catálogo</a>
+            <a href="#proyecto" class="btn btn-outline">Ver Proyecto de Innovación</a>
+        </div>
+
+        <!-- Onda separadora -->
+        <div class="wave-bottom">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- ================= NOSOTROS ================= -->
+    <section id="nosotros" class="bg-pattern">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>¿Quiénes Somos?</h2>
+                <p>Conoce nuestra identidad, nuestros principios y el rumbo que guía a PUNTO ESCOLAR.</p>
+            </div>
+            <div class="about-grid">
+                <div class="about-text reveal">
+                    <h3 style="color: var(--primary-blue); margin-bottom: 1rem; font-size: 1.8rem;">Nuestra Historia y Contexto</h3>
+                    <p>PUNTO ESCOLAR es una empresa comercial dedicada a la venta minorista de artículos de papelería, materiales educativos y útiles escolares. Nuestra actividad principal consiste en ofrecer productos destinados a satisfacer las necesidades académicas, administrativas y de oficina.</p>
+                    <p>Nos encontramos en un proceso de evolución constante. Entendemos que el comercio minorista tradicional debe adaptarse a las nuevas exigencias del mercado, por lo que hemos emprendido un viaje hacia la modernización tecnológica de nuestros procesos.</p>
+                    <p>Nuestro compromiso es proporcionar una variedad de productos mediante una atención organizada y un servicio orientado a la satisfacción del cliente, garantizando la disponibilidad de productos y un control apropiado de los recursos.</p>
+                </div>
+                <div class="mv-cards reveal">
+                    <div class="mv-card">
+                        <h3><i class="fa-solid fa-bullseye"></i> Misión</h3>
+                        <p>Ofrecer productos escolares y de papelería de calidad que contribuyan al desarrollo académico, educativo y administrativo de nuestros clientes, mediante una atención responsable, un servicio eficiente y una gestión comercial organizada, incorporando progresivamente herramientas tecnológicas que fortalezcan nuestros procesos.</p>
+                    </div>
+                    <div class="mv-card">
+                        <h3><i class="fa-solid fa-eye"></i> Visión</h3>
+                        <p>Consolidarnos como una empresa comercial reconocida por su organización, calidad de servicio e innovación, mediante la incorporación estratégica de tecnologías digitales que permitan optimizar nuestras operaciones, fortalecer nuestra competitividad y responder eficazmente a las necesidades cambiantes del mercado.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= CATÁLOGO Y TRABAJOS ================= -->
+    <section id="catalogo" class="bg-gray">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Nuestras Líneas de Productos</h2>
+                <p>Contamos con todo lo necesario para el ámbito escolar, académico y de oficina.</p>
+            </div>
+            <div class="catalog-grid reveal">
+                <div class="product-card">
+                    <div class="icon-box">
+                        <i class="fa-solid fa-book"></i>
+                    </div>
+                    <h3>Útiles Escolares</h3>
+                    <p>Cuadernos, lápices, lapiceros, borradores, reglas y sacapuntas de las mejores marcas para el día a día escolar.</p>
+                </div>
+                <div class="product-card">
+                    <div class="icon-box">
+                        <i class="fa-solid fa-pen-nib"></i>
+                    </div>
+                    <h3>Escritura y Oficina</h3>
+                    <p>Marcadores, correctores, resaltadores, carpetas y archivadores ideales para mantener la organización en el trabajo.</p>
+                </div>
+                <div class="product-card">
+                    <div class="icon-box">
+                        <i class="fa-solid fa-palette"></i>
+                    </div>
+                    <h3>Material Didáctico</h3>
+                    <p>Cartulinas, papel bond, papel de colores y materiales para manualidades que fomentan la creatividad.</p>
+                </div>
+                <div class="product-card">
+                    <div class="icon-box">
+                        <i class="fa-solid fa-backpack"></i>
+                    </div>
+                    <h3>Accesorios</h3>
+                    <p>Mochilas, estuches, pegamentos, tijeras y otros complementos esenciales para estudiantes y profesionales.</p>
+                </div>
+            </div>
+
+            <!-- ================= PORTAFOLIO ================= -->
+            <div class="portfolio-section reveal">
+                <div class="section-header" style="margin-bottom: 2rem;">
+                    <h2>Nuestros Trabajos y Manualidades</h2>
+                    <p>Un vistazo a lo que se puede crear con los materiales de PUNTO ESCOLAR.</p>
+                </div>
+                
+                <div class="portfolio-grid">
+                    <div class="portfolio-item">
+                        <div class="portfolio-img">
+                            <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Organizador de escritorio con materiales reciclados">
+                        </div>
+                        <div class="portfolio-info">
+                            <h4>Organizador Creativo</h4>
+                            <p>Elaborado con tubos de cartón, papel de colores y pegamento.</p>
+                        </div>
+                    </div>
+                    <div class="portfolio-item">
+                        <div class="portfolio-img">
+                            <img src="https://images.unsplash.com/photo-1531346878377-a5be20888e57?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Cuaderno decorado con papel y marcadores">
+                        </div>
+                        <div class="portfolio-info">
+                            <h4>Cuaderno Personalizado</h4>
+                            <p>Forrado con papel de color y decorado con marcadores y stickers.</p>
+                        </div>
+                    </div>
+                    <div class="portfolio-item">
+                        <div class="portfolio-img">
+                            <img src="https://images.unsplash.com/photo-1516979187457-637abb4f9353?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Collage artístico con papel de colores">
+                        </div>
+                        <div class="portfolio-info">
+                            <h4>Collage Artístico</h4>
+                            <p>Creado con cartulinas, papel bond, tijeras y pegamento.</p>
+                        </div>
+                    </div>
+                    <div class="portfolio-item">
+                        <div class="portfolio-img">
+                            <img src="https://images.unsplash.com/photo-1456735190827-d1262f71b8a3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Estuche y útiles escolares decorados">
+                        </div>
+                        <div class="portfolio-info">
+                            <h4>Estuche y Útiles Decorados</h4>
+                            <p>Personalización de estuches y lápices con cintas y colores.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ================= PROYECTO DIGITAL ================= -->
+    <section id="proyecto" class="digital-section">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Proyecto: Transformación Digital</h2>
+                <p>La tecnología como instrumento estratégico para ganar eficiencia operativa y fortalecer el control interno.</p>
+            </div>
+            
+            <div class="digital-grid">
+                <!-- Herramientas -->
+                <div class="tech-tools reveal">
+                    <div class="tech-item">
+                        <i class="fa-solid fa-table"></i>
+                        <div>
+                            <h4>Google Sheets (Hojas de Cálculo)</h4>
+                            <p>Implementación de un sistema de gestión para registrar productos, precios, existencias, ventas y generar reportes automatizados de la empresa.</p>
+                        </div>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fa-solid fa-file-lines"></i>
+                        <div>
+                            <h4>Google Forms (Formularios)</h4>
+                            <p>Captura ágil de información comercial y recopilación de datos para el diagnóstico y control administrativo.</p>
+                        </div>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fa-solid fa-cloud"></i>
+                        <div>
+                            <h4>Google Drive (Almacenamiento)</h4>
+                            <p>Organización de carpetas digitales para almacenar facturas, registros y documentos administrativos de forma segura.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabla Comparativa -->
+                <div class="reveal">
+                    <h3 style="color: var(--accent-yellow); margin-bottom: 1.5rem; font-size: 1.4rem;">Impacto de la Digitalización</h3>
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Antes (Procesos Manuales)</th>
+                                <th>Después (Solución Digital)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Inventario manual y propenso a errores.</td>
+                                <td>Inventario digital centralizado y exacto.</td>
+                            </tr>
+                            <tr>
+                                <td>Registro de ventas en papel.</td>
+                                <td>Registro electrónico en hojas de cálculo.</td>
+                            </tr>
+                            <tr>
+                                <td>Información dispersa y difícil de consultar.</td>
+                                <td>Datos centralizados en la nube.</td>
+                            </tr>
+                            <tr>
+                                <td>Documentos físicos (facturas/recibos).</td>
+                                <td>Archivos digitales organizados por carpetas.</td>
+                            </tr>
+                            <tr>
+                                <td>Consulta lenta de existencias.</td>
+                                <td>Consulta organizada e inmediata del stock.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= EQUIPO ================= -->
+    <section id="equipo" class="bg-pattern">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Equipo del Proyecto</h2>
+                <p>Estudiantes del Instituto Nacional de Alegría - Módulo 2.8: Proyecto Empresarial.</p>
+            </div>
+            
+            <div class="team-grid reveal">
+                <div class="team-card">
+                    <i class="fa-solid fa-user-graduate"></i>
+                    <h4>Saira Michelle Campos Castro</h4>
+                    <p>Carnet #3</p>
+                </div>
+                <div class="team-card">
+                    <i class="fa-solid fa-user-graduate"></i>
+                    <h4>Claudio Alain Favre Reyes</h4>
+                    <p>Carnet #8</p>
+                </div>
+                <div class="team-card">
+                    <i class="fa-solid fa-user-graduate"></i>
+                    <h4>José Daniel Campos Guatemala</h4>
+                    <p>Carnet #4</p>
+                </div>
+                <div class="team-card">
+                    <i class="fa-solid fa-user-graduate"></i>
+                    <h4>Álvaro Francisco Batlle Alemán</h4>
+                    <p>Carnet #2</p>
+                </div>
+                <div class="team-card">
+                    <i class="fa-solid fa-user-graduate"></i>
+                    <h4>Hayden Lisbeth Fuentes Martínez</h4>
+                    <p>Carnet #9</p>
+                </div>
+            </div>
+
+            <div class="reveal" style="text-align: center; margin-top: 3rem; padding: 2rem; background: #EDF2F7; border-radius: 15px; box-shadow: var(--card-shadow);">
+                <h3 style="color: var(--primary-blue); margin-bottom: 0.5rem;"><i class="fa-solid fa-chalkboard-user"></i> Docente: Elvis Castro</h3>
+                <p style="color: #4A5568;">Código: 12458 | 2° Año de Bachillerato Técnico Vocacional | Sección "A"</p>
+                <p style="color: #718096; font-size: 0.9rem; margin-top: 0.5rem;">Alegría, Usulután, El Salvador - 2026</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+    <footer>
+        <div class="footer-wave">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+            </svg>
+        </div>
+
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3>PUNTO ESCOLAR</h3>
+                <p>Comprometidos con la educación y la modernización empresarial en El Salvador. Ofrecemos calidad, innovación y un servicio excepcional.</p>
+            </div>
+            <div class="footer-col">
+                <h3>Enlaces Rápidos</h3>
+                <ul>
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#nosotros">Sobre Nosotros</a></li>
+                    <li><a href="#catalogo">Catálogo de Productos</a></li>
+                    <li><a href="#proyecto">Transformación Digital</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Contacto</h3>
+                <p><i class="fa-solid fa-location-dot" style="margin-right: 10px; color: var(--accent-yellow);"></i> El Salvador, Sector Comercio Minorista</p>
+                <p><i class="fa-solid fa-envelope" style="margin-right: 10px; color: var(--accent-yellow);"></i> info@puntoescolar.edu.sv</p>
+                <p><i class="fa-solid fa-school" style="margin-right: 10px; color: var(--accent-yellow);"></i> Instituto Nacional de Alegría</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 PUNTO ESCOLAR. Todos los derechos reservados. | Proyecto Académico - Módulo 2.8 Transformación Digital.</p>
+        </div>
+    </footer>
+
+    <!-- ================= JAVASCRIPT ================= -->
+    <script>
+        // 1. Menú Móvil
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navLinks = document.getElementById('nav-links');
+
+        mobileMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            const icon = mobileMenu.querySelector('i');
+            if(navLinks.classList.contains('active')){
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-xmark');
+            } else {
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // Cerrar menú al hacer clic en un enlace
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                const icon = mobileMenu.querySelector('i');
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            });
+        });
+
+        // 2. Animaciones al hacer Scroll (Scroll Reveal)
+        const revealElements = document.querySelectorAll('.reveal');
+
+        const revealOnScroll = () => {
+            const windowHeight = window.innerHeight;
+            const elementVisible = 100;
+
+            revealElements.forEach((reveal) => {
+                const elementTop = reveal.getBoundingClientRect().top;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveal.classList.add('active');
+                }
+            });
+        };
+
+        window.addEventListener('scroll', revealOnScroll);
+        // Ejecutar una vez al cargar para mostrar lo que ya está en pantalla
+        revealOnScroll();
+    </script>
+</body>
+</html>
